@@ -1,0 +1,80 @@
+/* DISEÑO GENERAL */
+
+body {
+    margin: 0;
+}
+
+.contenedor {
+    width: 100%;
+}
+
+.header {
+    text-align: center;
+    padding: 10px;
+}
+
+.main {
+    background-color: lightblue;
+}
+
+
+
+.conceptos {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.caja {
+    text-align: center;
+    color: white;
+    padding: 10px;
+}
+
+.caja img {
+    width: 200px;
+    height: 200px;
+}
+
+.caja p {
+    padding: 10px;
+}
+
+.footer {
+    background-color: lightblue;
+    text-align: center;
+    padding: 10px;
+}
+
+
+
+@media (max-width: 900px) {
+
+    .conceptos {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .caja img {
+        width: 180px;
+        height: 180px;
+    }
+
+}
+
+
+
+@media (max-width: 600px) {
+
+    .conceptos {
+        grid-template-columns: 1fr;
+    }
+
+    .caja img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .caja {
+        font-size: 14px;
+    }
+
+}

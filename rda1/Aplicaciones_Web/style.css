@@ -1,0 +1,33 @@
+body{
+    background-color:azure;
+}
+.principal{
+    display:flex; 
+    gap: 50px;
+    background-color: bisque;
+    padding: 20px;
+}
+#main{
+    width: auto;
+    padding: 20px;
+    text-align: center;
+    margin: 10px auto;
+}
+.nav{
+    background-color: bisque;
+}
+.nombre{
+    background-color: burlywood;
+}
+#footer{
+    background-color: black;
+}
+.pie{
+    color: white;
+}
+.columna{
+    flex:1;
+}
+.pie{
+    color: white;
+}

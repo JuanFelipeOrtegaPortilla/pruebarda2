@@ -1,0 +1,26 @@
+.caja{
+    width:400px;
+    padding: 50px;
+    background-color:lightskyblue;
+    text-align:center;
+    margin: 50px auto;
+}
+/*Este media query se activa cuando la pantalla tenga 600px o menos*/
+@media(max-width:600px){
+    .caja{
+        width:500px;
+        background-color:lightcoral;
+    }
+}
+@media(max-height:400px){
+    .caja{
+        text-align:left;
+        background-color:lightgreen;
+    }
+}
+@media (max-width: 200px) {
+    .caja {
+        font-size: 10px;
+        background-color: pink;
+    }
+}
