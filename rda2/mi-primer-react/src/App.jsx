@@ -8,6 +8,7 @@ import Contactos from './pages/contactos.jsx'
 import Productos from './pages/productos.jsx'
 import Compras from './pages/compras.jsx'
 import './App.css'
+import Catalogo from './pages/catalogoweb.jsx'
 
 function App() {
   const [lista, setLista] = useState([])
@@ -58,6 +59,10 @@ function App() {
                   quitarLicores={quitarLicores}
                 />
               }
+            />
+            <Route
+              path="/catalogoweb"
+              element={<Catalogo agregar={agregar} />}
             />
           </Routes>
         </section>

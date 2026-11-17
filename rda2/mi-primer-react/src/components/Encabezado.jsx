@@ -26,6 +26,9 @@ function Encabezado({ titulo }) {
           <Link className="nav-link" to="/compras">
             Compras
           </Link>
+          <Link className='nav-link' to="catalogoweb">
+            Catalogo
+          </Link>
         </div>
 
       </div>
