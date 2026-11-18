@@ -9,15 +9,15 @@ import Productos from './pages/productos.jsx'
 import Compras from './pages/compras.jsx'
 import './App.css'
 import Catalogo from './pages/catalogoweb.jsx'
+import Ofertas from './pages/ofertas.jsx'
 
 function App() {
   const [lista, setLista] = useState([])
 
   function agregar(nombre, precio) {
-    const producto = { nombre: nombre, precio: precio }
-    setLista([...lista, producto])
+    const producto = { nombre, precio }
+    setLista((listaAnterior) => [...listaAnterior, producto])
   }
-
   function otraCompra() {
     setLista([])
   }
@@ -63,6 +63,10 @@ function App() {
             <Route
               path="/catalogoweb"
               element={<Catalogo agregar={agregar} />}
+            />
+            <Route
+              path="/ofertas"
+              element={<Ofertas agregar={agregar} />}
             />
           </Routes>
         </section>

@@ -10,14 +10,17 @@ function CardProducto({
     agregar,
     imagen,
     descripcion,
-    mostrarDescuento = true
+    esCatalogo = false
 }) {
 
     const [contador, setContador] = useState(0);
     const [descuento, setDescuento] = useState(1);
 
-    let iva = precio * 0.15;
-    let total = precio + iva;
+    function agregarProducto() {
+        if (disponible && agregar) {
+            agregar(nombre, precio);
+        }
+    }
 
     function mostrarProducto() {
         if (disponible && contador < stock) {
@@ -25,11 +28,8 @@ function CardProducto({
         }
     }
 
-    function agregarProducto() {
-        if (disponible && typeof agregar === "function") {
-            agregar(nombre, precio);
-        }
-    }
+    let iva = precio * 0.15;
+    let total = precio + iva;
 
     function calcularTotal() {
         return total * contador;
@@ -37,7 +37,7 @@ function CardProducto({
 
     function calcularDescuento() {
         return calcularTotal() -
-            (calcularTotal() * (descuento / 100));
+            (calcularTotal() * descuento / 100);
     }
 
     const totalConDescuento = calcularDescuento();
@@ -49,10 +49,21 @@ function CardProducto({
     }, [nombre, totalConDescuento, onTotalChange]);
 
     return (
-        <div className="card h-100 shadow-sm border-0 rounded-3">
+        <div
+            className={
+                esCatalogo
+                    ? "card h-100 shadow-sm border-0 rounded-3"
+                    : "card"
+            }
+            style={
+                esCatalogo
+                    ? {}
+                    : { width: "18rem" }
+            }
+        >
 
-            {/* IMAGEN */}
-            {imagen && (
+            {/* IMAGEN SOLO PARA CATÁLOGO */}
+            {esCatalogo && imagen && (
                 <div className="bg-light text-center p-3">
                     <img
                         src={imagen}
@@ -67,103 +78,94 @@ function CardProducto({
                 </div>
             )}
 
-            <div className="card-body d-flex flex-column">
+            <div className="card-body">
 
-                {/* NOMBRE */}
-                <h5 className="card-title fw-bold">
+                <h5 className={
+                    esCatalogo
+                        ? "card-title fw-bold"
+                        : "card-title badge bg-success"
+                }>
                     {nombre}
                 </h5>
 
-                {/* DESCRIPCIÓN */}
-                {descripcion && (
+                {esCatalogo && descripcion && (
                     <p className="card-text text-muted small">
                         {descripcion}
                     </p>
                 )}
 
-                {/* PRECIOS */}
-                <div className="mb-3">
-
-                    <p className="mb-1">
-                        Precio:
-                        <strong className="text-primary">
-                            {" "}${precio.toFixed(2)}
-                        </strong>
+                {!esCatalogo && (
+                    <p className="card-text">
+                        Producto a precio ${precio}.
                     </p>
+                )}
 
-                    <p className="mb-1">
-                        IVA (15%): ${iva.toFixed(2)}
-                    </p>
+                <p className="mb-1">
+                    Precio: ${precio.toFixed(2)}
+                </p>
 
-                    <h5 className="text-success fw-bold">
-                        Total: ${total.toFixed(2)}
-                    </h5>
+                <p className="fw-bold">
+                    IVA (15%): ${iva.toFixed(2)}
+                </p>
 
-                </div>
+                <p className="fw-bold badge bg-success">
+                    Total: ${total.toFixed(2)}
+                </p>
 
-                {/* DISPONIBILIDAD */}
-                <div className="mb-3">
+                <br />
 
-                    <span className={
-                        disponible
-                            ? "badge bg-success me-2"
-                            : "badge bg-danger me-2"
-                    }>
-                        {disponible ? "Disponible" : "Agotado"}
-                    </span>
+                <span className={
+                    disponible
+                        ? "bg-success badge"
+                        : "bg-danger badge"
+                }>
+                    {disponible ? "Disponible" : "Agotado"}
+                </span>
 
-                    <span className={
-                        stock > 10
-                            ? "badge bg-success"
-                            : stock < 5
-                                ? "badge bg-danger"
-                                : "badge bg-warning text-dark"
-                    }>
-                        Stock: {stock}
-                    </span>
+                <br />
 
-                </div>
+                <span className={
+                    stock > 10
+                        ? "bg-success badge"
+                        : stock < 5
+                            ? "bg-danger badge"
+                            : "bg-warning badge text-dark"
+                }>
+                    {stock > 10
+                        ? "Disponible"
+                        : stock < 5
+                            ? "Riesgo"
+                            : "Se termina"}
+                </span>
 
-                {/* BOTONES */}
-                <div className="d-flex gap-2 mb-3 mt-auto">
+                <br />
 
-                    <button
-                        className="btn btn-primary flex-fill"
-                        onClick={mostrarProducto}
-                        disabled={!disponible || contador >= stock}
-                    >
-                        Agregar
-                    </button>
+                <button
+                    className="btn btn-primary"
+                    onClick={mostrarProducto}
+                    disabled={!disponible || contador >= stock}
+                >
+                    Agregar
+                </button>
 
-                    <button
-                        className="btn btn-danger flex-fill"
-                        onClick={agregarProducto}
-                        disabled={!disponible}
-                    >
-                        Comprar
-                    </button>
+                <button
+                    className="btn btn-danger"
+                    onClick={agregarProducto}
+                    disabled={!disponible}
+                >
+                    Comprar
+                </button>
 
-                </div>
+                <h3>Cantidad: {contador}</h3>
 
-                {/* CANTIDAD */}
-                <div className="bg-light rounded p-3">
+                <h3 className="fw-bold">
+                    Total: ${calcularTotal().toFixed(2)}
+                </h3>
 
-                    <p className="mb-1">
-                        Cantidad seleccionada:
-                        <strong> {contador}</strong>
-                    </p>
-
-                    <h5 className="fw-bold mb-0">
-                        Total: ${calcularTotal().toFixed(2)}
-                    </h5>
-
-                </div>
-
-                {/* DESCUENTO OPCIONAL */}
-                {mostrarDescuento && (
-                    <div className="mt-3">
-
-                        <h6>Descuento (%)</h6>
+                {/* DESCUENTO SOLO EN PRODUCTOS */}
+                {!esCatalogo && (
+                    <>
+                        <h6>Descuento</h6>
 
                         <input
                             className="form-control form-control-sm"
@@ -173,22 +175,16 @@ function CardProducto({
                             value={descuento}
                             onChange={(e) =>
                                 setDescuento(
-                                    Math.min(
-                                        100,
-                                        Math.max(0, Number(e.target.value))
-                                    )
+                                    Number(e.target.value) || 0
                                 )
                             }
                         />
 
-                        <p className="mt-2 mb-0">
+                        <p>
                             Total con descuento:
-                            <strong>
-                                {" "}${totalConDescuento.toFixed(2)}
-                            </strong>
+                            ${totalConDescuento.toFixed(2)}
                         </p>
-
-                    </div>
+                    </>
                 )}
 
             </div>
