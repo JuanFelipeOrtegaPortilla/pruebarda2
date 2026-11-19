@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Encabezado from './components/Encabezado.jsx'
-import Pie from './components/pie.jsx'
+import Pie from './components/Pie.jsx'
 import Inicio from './pages/inicio.jsx'
 import Contactos from './pages/contactos.jsx'
 import Productos from './pages/productos.jsx'
